@@ -1,0 +1,21 @@
+{
+  "name": "lovefield",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "output"
+  ],
+  "dependencies": {
+    "purescript-console": "^2.0.0",
+    "lovefield": "^2.1.10",
+    "purescript-enums": "^2.0.0",
+    "purescript-eff-functions": "^2.0.0",
+    "purescript-aff-promise": "^0.4.0",
+    "purescript-profunctor-lenses": "^2.1.0",
+    "purescript-symbols": "^2.0.0"
+  },
+  "devDependencies": {
+    "purescript-debug": "^2.0.0"
+  }
+}

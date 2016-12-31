@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "buildtest": "pulp browserify --include test --to test.js --main Test.Main && open testindex.html"
+  }
+}

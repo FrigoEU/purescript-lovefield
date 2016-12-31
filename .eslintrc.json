@@ -1,0 +1,22 @@
+{
+  "env": {
+    "browser": true
+  },
+  "extends": "eslint:recommended",
+  "globals": {
+    "exports": true,
+    "lf": true
+  },
+  "rules": {
+    "quotes": 0,
+    "strict": 0,
+    "global-strict": 0,
+    "no-use-before-define": 0,
+    "no-console": 0,
+    "no-trailing-spaces": 0,
+    "no-multi-spaces": 0,
+    "no-underscore-dangle": 0,
+    "new-cap": 0,
+    "key-spacing": 2
+  }
+}
