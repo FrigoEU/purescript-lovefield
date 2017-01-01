@@ -71,11 +71,9 @@ insertOrder db id productId amount =
 -- Is this maybe a problem in the compiler itself?? Can't figure it out.
 selectProductById :: forall e. LFDB -> Int -> Aff ( lf :: LF | e) (Array 
                                (HCons "products"
-                                (HCons "price" Number
-                                (HCons "name" String
-                                (HCons "id" Int
-                                  HNil)))
-                                HNil))
+                                 (HCons "price" Number
+                                 (HCons "name" String
+                                 (HCons "id" Int HNil))) HNil))
 selectProductById db id =
   select (emptySelection products
           # project (SProxy :: SProxy "id")
@@ -84,6 +82,7 @@ selectProductById db id =
   # where' products (SProxy :: SProxy "id") equal id
   # runQuery db
 
+-- "order" of tables is reversed :(
 selectProductsAndOrdersByAmount ::
   forall e. LFDB -> Int -> Aff ( lf :: LF | e) (Array
                                (HCons "orders" (HCons "amount" Int
@@ -105,6 +104,12 @@ selectProductsAndOrdersByAmount db amount =
           # project (SProxy :: SProxy "amount"))
   # where' orders (SProxy :: SProxy "amount") equal amount
   # runQuery db
+
+_products :: forall a b. (HasField "products" a b) => a -> b
+_products = getField (SProxy :: SProxy "products")
+
+_name :: forall a b. (HasField "name" a b) => a -> b
+_name = getField (SProxy :: SProxy "name")
 
 main :: forall e. Eff (lf :: LF, err :: EXCEPTION, console :: CONSOLE | e) Unit
 main = void $ runAff (show >>> log) (\_ -> log "Done!") do
@@ -130,9 +135,3 @@ main = void $ runAff (show >>> log) (\_ -> log "Done!") do
 
   selectProductsAndOrdersByAmount db 4 >>= map (_products >>> _name) >>> traceAnyA
     -- Should be ["spaghetti", "pizza"]
-
-_products :: forall a b. (HasField "products" a b) => a -> b
-_products = getField (SProxy :: SProxy "products")
-
-_name :: forall a b. (HasField "name" a b) => a -> b
-_name = getField (SProxy :: SProxy "name")
